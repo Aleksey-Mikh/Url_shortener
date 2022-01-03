@@ -1,0 +1,23 @@
+{% extends "shortener/base.html" %}
+
+{% block content %}
+
+<div class="col-md-4 ">
+    <div class="card-body">
+        <h2>Profile: {{ customer.user.username }}</h2>
+
+        <h5 >Your URL history:</h5>
+        {% for url in urls %}
+        <div class="card text-center m-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ url.origin_url }}</h5>
+            </div>
+            <div class="card-footer text-muted">
+                {{ url.pub_date|date:"Y-m-d H:i" }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
