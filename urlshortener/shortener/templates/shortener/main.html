@@ -14,4 +14,7 @@
     {% endfor %}
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+{% if short_url %}
+{{ short_url }}
+{% endif %}
 {% endblock %}
