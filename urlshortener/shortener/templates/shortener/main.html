@@ -1,0 +1,17 @@
+{% extends "shortener/base.html" %}
+
+{% block content %}
+<form action="{% url 'home' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="mb-3">
+        {{ field.label_tag }}
+        {{ field }}
+        <div class="invalid-feedback">
+            {{ field.errors }}
+        </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
