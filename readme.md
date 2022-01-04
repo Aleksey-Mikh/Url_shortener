@@ -38,13 +38,13 @@
 Имеется урезанная БД букмекерской конторы, в которой имеются следующие таблицы:
 
 1) event_entity,  в которой имеются  столбцы play_id - идентификатор игры, sport_name - название спорта, 
-2) home_team и away_team - название домашней и выездной команды соответственно;
+home_team и away_team - название домашней и выездной команды соответственно;
 
-3) event_value, в которой хранятся play_id - идентификатор игры, value - коэффициент на определённый исход, 
-4) attribute - исход события, outcome - сыграла ставка либо нет;
+2) event_value, в которой хранятся play_id - идентификатор игры, value - коэффициент на определённый исход, 
+attribute - исход события, outcome - сыграла ставка либо нет;
 
-5) bid, в которой имеются столбцы b_id - идентификатор ставки, client_number - идентификатор клиента, play_id - 
-6) идентификатор игры, amount - сумму, которую поставил клиент, coefficient - коэффициент, на который поставил клиент.
+3) bid, в которой имеются столбцы b_id - идентификатор ставки, client_number - идентификатор клиента, play_id - 
+идентификатор игры, amount - сумму, которую поставил клиент, coefficient - коэффициент, на который поставил клиент.
 
 Задание
 -----------------------
@@ -59,3 +59,33 @@
 
 СУБД: MySQL
 Дамп БД находится в sql/test_task_sql.sql
+---
+
+
+Тестовое Django
+------------------------------
+```
+pip install -r requirements.txt
+```
+
+
+---
+Тестовое SQL
+--------------------------------------
+Задание 1:
+
+    SELECT client_number, sum(if(outcome = 'win', 1, 0)) as 'Побед', sum(if(outcome = 'lose', 1, 0)) as 'Поражений'
+    FROM 
+        bid 
+        INNER JOIN event_entity USING(play_id)
+        INNER JOIN event_value USING(play_id)
+    WHERE coefficient = event_value.value
+    GROUP BY client_number;
+
+Задание 2:
+
+    USE test_import;
+    SELECT CONCAT(home_team, '-', away_team) AS game, count(play_id) as games_count
+    FROM event_entity
+    group by home_team, away_team
+    ORDER BY games_count;
