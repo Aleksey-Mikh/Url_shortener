@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from .models import Profile
 from .forms import UserRegisterForm, UserLoginForm
@@ -47,5 +46,6 @@ def user_profile(request):
     context = {
         "customer": customer,
         "urls": urls,
+        "site_url": settings.SITE_URL,
     }
     return render(request, "user_reg_log/user_profile.html", context)
