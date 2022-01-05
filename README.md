@@ -29,8 +29,11 @@ pip install -r requirements.txt
 
 Задание 2:
 
-    USE test_import;
-    SELECT CONCAT(home_team, '-', away_team) AS game, count(play_id) as games_count
-    FROM event_entity
-    group by home_team, away_team
-    ORDER BY games_count;
+    SELECT game, count(game) AS games_count
+    FROM 
+        (
+        SELECT concat(least(home_team, away_team), '-', greatest(home_team, away_team)) AS game
+        FROM event_entity
+        ) AS new_table
+    GROUP BY game
+    ORDER BY games_count, game DESC;
